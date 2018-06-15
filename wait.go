@@ -13,7 +13,9 @@ func WaitToDie(beforeDie func())  {
 	go func() {
 		for range signalChan {
 			fmt.Printf("\nReceived an interrupt...\n\n")
-			beforeDie()
+			if beforeDie != nil {
+				beforeDie()
+			}
 			cleanupDone <- true
 		}
 	}()
